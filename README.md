@@ -2309,6 +2309,34 @@ contract ClickTwelve {
     }
 
     function count() external view returns (uint256) {
-        return clickers.length;
+        return clickers.// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract AccessThirteen {
+    address public owner;
+    mapping(address => bool) public hasAccess;
+
+    event AccessGranted(address indexed user);
+    event AccessRevoked(address indexed user);
+
+    constructor() {
+        owner = msg.sender;
+        hasAccess[msg.sender] = true;
+    }
+
+    function grantAccess(address user) external {
+        require(msg.sender == owner, "Not owner");
+        hasAccess[user] = true;
+        emit AccessGranted(user);
+    }
+
+    function revokeAccess(address user) external {
+        require(msg.sender == owner, "Not owner");
+        hasAccess[user] = false;
+        emit AccessRevoked(user);
+    }
+
+    function checkAccess(address user) external view returns (bool) {
+        return hasAccess[user];
     }
 }
